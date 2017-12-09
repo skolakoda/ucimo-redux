@@ -19,13 +19,16 @@ const render = (stanje) => {
 /* REDUKTOR */
 
 const pocetnoStanje = {
-  todos: []
+  todos: [],
+  filter: 'POKAZI_SVE'
 }
 
 const reduktor = (stanje = pocetnoStanje, action) => {
   switch (action.type) {
     case 'DODAJ':
       return Object.assign({}, pocetnoStanje, { todos: [...stanje.todos, todo.value] })
+    case 'PROMENI_FILTER':
+      return stanje
     default: return stanje
   }
 }

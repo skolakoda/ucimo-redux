@@ -1,13 +1,13 @@
 const {createStore} = Redux
 
-const brojac = document.getElementById('brojac')
+const broj = document.getElementById('broj')
 const plus = document.getElementById('plus')
 const minus = document.getElementById('minus')
 
 /* FUNKCIJE */
 
-const render = (brojac, stanje) => {
-  brojac.innerText = stanje
+const render = (broj, stanje) => {
+  broj.innerText = stanje
 }
 
 const info = () => console.log('stanje promenjeno')
@@ -18,7 +18,7 @@ REDUKTOR
   stanje je samo prost broj
 */
 
-const reduktor = (state = 0, action) => {
+const brojac = (state = 0, action) => {
   switch (action.type) {
     case 'INCREMENT': return state + 1
     case 'DECREMENT': return state - 1
@@ -31,8 +31,8 @@ SKLADIŠTE
   registruje povratne funkcije, koje poziva kad se stanje promeni
 */
 
-const store = createStore(reduktor)
-store.subscribe(() => render(brojac, store.getState()))
+const store = createStore(brojac)
+store.subscribe(() => render(broj, store.getState()))
 store.subscribe(info)
 
 /*
@@ -46,4 +46,4 @@ minus.addEventListener('click', () => store.dispatch({type: 'DECREMENT'}))
 
 /* INIT */
 
-render(brojac, store.getState())
+render(broj, store.getState())

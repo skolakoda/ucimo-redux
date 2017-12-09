@@ -1,21 +1,25 @@
 expect (
-  reduktor(0, { type: 'INCREMENT'})
+  brojac(0, { type: 'INCREMENT'})
 ).toEqual(1)
 
 expect (
-  reduktor(1, { type: 'INCREMENT'})
+  brojac(1, { type: 'INCREMENT'})
 ).toEqual(2)
 
 expect (
-  reduktor(2, { type: 'DECREMENT'})
+  brojac(2, { type: 'DECREMENT'})
 ).toEqual(1)
 
 expect (
-  reduktor(1, { type: 'DECREMENT'})
+  brojac(1, { type: 'DECREMENT'})
 ).toEqual(0)
 
 expect (
-  reduktor(undefined, {})
+  brojac(6, { type: 'NEPOSTOJCE'})
+).toEqual(6)
+
+expect (
+  brojac(undefined, {})
 ).toEqual(0)
 
 console.log('Testovi prolaze!')
