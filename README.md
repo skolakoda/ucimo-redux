@@ -1,6 +1,6 @@
 # Učimo Redux
 
-Materijali za kurs [https://skolakoda.org/kursevi/ucimo-redux](Učimo Redux) Škole koda.
+Materijali za kurs [Učimo Redux](https://skolakoda.org/kursevi/ucimo-redux) Škole koda.
 
 ## Pokretanje
 
