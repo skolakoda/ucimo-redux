@@ -1,4 +1,17 @@
-const { createStore } = Redux
+const {createStore} = Redux
+
+/* FUNKCIJE */
+
+const render = stanje => {
+  document.body.innerHTML = `<h1>${stanje}</h1>`
+}
+
+const info = () => console.log('stanje promenjeno')
+
+/*
+REDUKTOR
+prima stanje i akciju, vraća novo stanje
+*/
 
 const reduktor = (state = 0, action) => {
   switch (action.type) {
@@ -8,24 +21,24 @@ const reduktor = (state = 0, action) => {
   }
 }
 
-const render = () => {
-  document.body.innerHTML = `<h1>${store.getState()}</h1>`
-}
-
-const info = () => console.log('stanje promenjeno')
+/*
+SKLADIŠTE
+poziva povratne funkcije kad se stanje promeni
+*/
 
 const store = createStore(reduktor)
-store.subscribe(render) // izvršava kad god se stanje promeni
+store.subscribe(() => render(store.getState()))
 store.subscribe(info)
 
-render()
+/*
+AKCIJE
+otpravljaju opis željene promene skladištu
+*/
 
-/** Emitovanje akcija **/
+document.addEventListener('click', () => store.dispatch({ type: 'INCREMENT'}))
 
-document.addEventListener('click', () => {
-  store.dispatch({ type: 'INCREMENT'})
-})
+document.addEventListener('contextmenu', () => store.dispatch({ type: 'DECREMENT' }))
 
-document.addEventListener('contextmenu', () => {
-  store.dispatch({ type: 'DECREMENT' });
-});
+/* INIT */
+
+render(store.getState())
