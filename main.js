@@ -1,16 +1,20 @@
 const {createStore} = Redux
 
+const brojac = document.getElementById('brojac')
+const plus = document.getElementById('plus')
+const minus = document.getElementById('minus')
+
 /* FUNKCIJE */
 
-const render = stanje => {
-  document.body.innerHTML = `<h1>${stanje}</h1>`
+const render = (brojac, stanje) => {
+  brojac.innerText = stanje
 }
 
 const info = () => console.log('stanje promenjeno')
 
 /*
 REDUKTOR
-prima stanje i akciju, vraća novo stanje
+  prima stanje i akciju, vraća novo stanje
 */
 
 const reduktor = (state = 0, action) => {
@@ -23,22 +27,22 @@ const reduktor = (state = 0, action) => {
 
 /*
 SKLADIŠTE
-poziva povratne funkcije kad se stanje promeni
+  registruje povratne funkcije koje poziva kad se stanje promeni
 */
 
 const store = createStore(reduktor)
-store.subscribe(() => render(store.getState()))
+store.subscribe(() => render(brojac, store.getState()))
 store.subscribe(info)
 
 /*
 AKCIJE
-otpravljaju opis željene promene skladištu
+  otpravljaju opis željene izmene skladištu na događaj
 */
 
-document.addEventListener('click', () => store.dispatch({ type: 'INCREMENT'}))
+plus.addEventListener('click', () => store.dispatch({type: 'INCREMENT'}))
 
-document.addEventListener('contextmenu', () => store.dispatch({ type: 'DECREMENT' }))
+minus.addEventListener('click', () => store.dispatch({type: 'DECREMENT'}))
 
 /* INIT */
 
-render(store.getState())
+render(brojac, store.getState())
