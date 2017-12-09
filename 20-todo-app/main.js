@@ -9,9 +9,10 @@ const dugme = $('#dugme')
 
 const render = (stanje) => {
   lista.innerHTML = ''
-  stanje.todos.map(txt => {
+  stanje.todos.map(task => {
     const li = document.createElement('li')
-    li.innerText = txt
+    li.onclick = () => store.dispatch({type: 'OBRNI_TODO'})
+    li.innerText = task.text
     lista.appendChild(li)
   })
 }
@@ -19,15 +20,21 @@ const render = (stanje) => {
 /* REDUKTOR */
 
 const pocetnoStanje = {
-  todos: [],
-  filter: 'POKAZI_SVE'
+  todos: [],  // treba da bude lista objekata
+  filter: 1
 }
 
 const reduktor = (stanje = pocetnoStanje, action) => {
   switch (action.type) {
     case 'DODAJ':
-      return Object.assign({}, pocetnoStanje, { todos: [...stanje.todos, todo.value] })
-    case 'PROMENI_FILTER':
+      const task = {
+        text: todo.value,
+        completed: false
+      }
+      return Object.assign({}, pocetnoStanje, { todos: [...stanje.todos, task] })
+    case 'OBRNI_TODO':
+      console.log('OBRNI_TODO');
+      // implementirati completed: !completed
       return stanje
     default: return stanje
   }
