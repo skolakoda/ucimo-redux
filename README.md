@@ -2,8 +2,10 @@
 
 Materijali za kurs [Učimo Redux](https://skolakoda.org/kursevi/ucimo-redux) Škole koda.
 
-## Pokretanje
+## Zavisnosti
 
-Koristimo samo dve biblioteke: [Redux](https://redux.js.org/) i [expect.js](https://github.com/mjackson/expect) (za testove), ručno prekopirane u projekat.
+Koristimo samo dve biblioteke: [Redux](https://redux.js.org/) i [Expect.js](https://github.com/mjackson/expect) (za testove), koje se nalaze u folderu `libs`.
+
+## Pokretanje
 
 Dovoljno je otvoriti `index.html` u pregledaču.
