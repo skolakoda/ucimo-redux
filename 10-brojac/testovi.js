@@ -15,10 +15,6 @@ expect (
 ).toEqual(0)
 
 expect (
-  reduktor(1, { type: 'PRD'})
-).toEqual(1)
-
-expect (
   reduktor(undefined, {})
 ).toEqual(0)
 

@@ -15,6 +15,7 @@ const info = () => console.log('stanje promenjeno')
 /*
 REDUKTOR
   prima stanje i akciju, vraća novo stanje
+  stanje je samo prost broj
 */
 
 const reduktor = (state = 0, action) => {
@@ -27,7 +28,7 @@ const reduktor = (state = 0, action) => {
 
 /*
 SKLADIŠTE
-  registruje povratne funkcije koje poziva kad se stanje promeni
+  registruje povratne funkcije, koje poziva kad se stanje promeni
 */
 
 const store = createStore(reduktor)
@@ -36,7 +37,7 @@ store.subscribe(info)
 
 /*
 AKCIJE
-  otpravljaju opis željene izmene skladištu na događaj
+  otpravljaju opis željene izmene skladištu, na događaj
 */
 
 plus.addEventListener('click', () => store.dispatch({type: 'INCREMENT'}))
