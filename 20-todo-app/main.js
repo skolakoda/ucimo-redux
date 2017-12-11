@@ -2,58 +2,77 @@ const {createStore} = Redux
 const $ = s => document.querySelector(s)
 
 const lista = $('#lista')
-const todoInput = $('#todo')
-const dugme = $('#dugme')
-
 let i = 0
-
-/* FUNKCIJE */
-
-const render = () => {
-  lista.innerHTML = ''
-  store.getState().todos.map(todo => {
-    const li = document.createElement('li')
-    li.innerText = todo.tekst
-    li.style.textDecoration = todo.uradjen ? 'line-through' : ''
-    li.onclick = () => store.dispatch({
-      type: 'OBRNI_TODO',
-      id: todo.id
-    })
-    lista.appendChild(li)
-  })
-}
 
 /* REDUKTOR */
 
 const pocetnoStanje = {
-  todos: [],  // treba da bude lista objekata
-  filter: 1
+  todos: [],
+  filter: 'sve'
 }
 
 const reduktor = (stanje = pocetnoStanje, akcija) => {
   switch (akcija.type) {
     case 'DODAJ':
-      const task = {
-        tekst: todoInput.value,
+      const todo = {
+        tekst: $('#todo').value,
         uradjen: false,
         id: i++
       }
-      return Object.assign({}, stanje, { todos: [...stanje.todos, task] })
+      return Object.assign({}, stanje, { todos: [...stanje.todos, todo] })
     case 'OBRNI_TODO':
       const todos = stanje.todos.map(todo => todo.id === akcija.id
         ? Object.assign({}, todo, {uradjen: !todo.uradjen})
         : Object.assign({}, todo)
       )
       return Object.assign({}, stanje, {todos})
+    case 'POSTAVI_FILTER':
+      return Object.assign({}, stanje, { filter: akcija.filter })
     default: return stanje
   }
 }
 
-/* SKLADIŠTE */
-
 const store = createStore(reduktor)
+const dispatch = store.dispatch
+
+/* RENDER */
+
+const render = () => {
+  lista.innerHTML = ''
+  const filter = store.getState().filter
+  store.getState().todos
+    .filter(todo => filter === 'sve' || todo.uradjen === filter)
+    .map(todo => {
+      const li = document.createElement('li')
+      li.innerText = todo.tekst
+      li.style.textDecoration = todo.uradjen ? 'line-through' : ''
+      li.onclick = () => dispatch({
+        type: 'OBRNI_TODO',
+        id: todo.id
+      })
+      lista.appendChild(li)
+    })
+}
+
 store.subscribe(render)
 
 /* AKCIJE */
 
-dugme.addEventListener('click', () => store.dispatch({type: 'DODAJ'}))
+const kreirajFilter = filter => {
+  return {
+    type: 'POSTAVI_FILTER',
+    filter
+  }
+}
+
+$('#dugme').addEventListener('click', () =>
+  dispatch({type: 'DODAJ'}))
+
+$('#sve').addEventListener('click', () =>
+  dispatch(kreirajFilter('sve')))
+
+$('#uradjene').addEventListener('click', () =>
+  dispatch(kreirajFilter(true)))
+
+$('#aktivne').addEventListener('click', () =>
+  dispatch(kreirajFilter(false)))
