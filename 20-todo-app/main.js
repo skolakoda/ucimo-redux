@@ -58,12 +58,10 @@ store.subscribe(render)
 
 /* AKCIJE */
 
-const kreirajFilter = filter => {
-  return {
-    type: 'POSTAVI_FILTER',
-    filter
-  }
-}
+const kreirajFilter = filter => ({
+  type: 'POSTAVI_FILTER',
+  filter
+})
 
 $('#dugme').addEventListener('click', () =>
   dispatch({type: 'DODAJ'}))
