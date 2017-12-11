@@ -1,6 +1,5 @@
 const {createStore} = Redux
 const $ = s => document.querySelector(s)
-
 const lista = $('#lista')
 let i = 0
 
