@@ -14,7 +14,7 @@ const reduktor = (stanje = pocetnoStanje, akcija) => {
   switch (akcija.type) {
     case 'DODAJ':
       const todo = {
-        tekst: $('#todo').value,
+        tekst: akcija.tekst,
         uradjen: false,
         id: i++
       }
@@ -63,7 +63,10 @@ const kreirajFilter = filter => ({
 })
 
 $('#dugme').addEventListener('click', () =>
-  dispatch({type: 'DODAJ'}))
+  dispatch({
+    type: 'DODAJ',
+    tekst: $('#todo').value
+  }))
 
 $('#sve').addEventListener('click', () =>
   dispatch(kreirajFilter('sve')))
