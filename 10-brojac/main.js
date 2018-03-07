@@ -1,49 +1,23 @@
 const {createStore} = Redux
+const [prikaz, povecaj, smanji] = document.querySelectorAll('#prikaz, #povecaj, #smanji')
 
-const broj = document.getElementById('broj')
-const plus = document.getElementById('plus')
-const minus = document.getElementById('minus')
+// funkcije
+const render = (prikaz, stanje) => prikaz.innerHTML = stanje
 
-/* FUNKCIJE */
-
-const render = (broj, stanje) => {
-  broj.innerText = stanje
+// reduktor
+const reduktor = (stanje = 0, akcija) => {
+  if (akcija.type == 'POVECAJ') return stanje + 1
+  if (akcija.type == 'SMANJI') return stanje - 1
+  return stanje
 }
 
-const info = () => console.log('stanje promenjeno')
+// skladiste
+const skladiste = createStore(reduktor)
+skladiste.subscribe(() => render(prikaz, skladiste.getState()))
 
-/*
-REDUKTOR
-  prima stanje i akciju, vraća novo stanje
-  stanje je samo prost broj
-*/
+// akcije
+povecaj.addEventListener('click', () => skladiste.dispatch({type: 'POVECAJ'}))
+smanji.addEventListener('click', () => skladiste.dispatch({type: 'SMANJI'}))
 
-const brojac = (state = 0, action) => {
-  switch (action.type) {
-    case 'INCREMENT': return state + 1
-    case 'DECREMENT': return state - 1
-    default: return state
-  }
-}
-
-/*
-SKLADIŠTE
-  registruje povratne funkcije, koje poziva kad se stanje promeni
-*/
-
-const store = createStore(brojac)
-store.subscribe(() => render(broj, store.getState()))
-store.subscribe(info)
-
-/*
-AKCIJE
-  otpravljaju opis željene izmene skladištu, na događaj
-*/
-
-plus.addEventListener('click', () => store.dispatch({type: 'INCREMENT'}))
-
-minus.addEventListener('click', () => store.dispatch({type: 'DECREMENT'}))
-
-/* INIT */
-
-render(broj, store.getState())
+// init
+render(prikaz, skladiste.getState())
