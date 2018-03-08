@@ -58,7 +58,10 @@ const render = () => {
   $('#lista').innerHTML = ''
   const filter = store.getState().filter
   store.getState().todos
-    .filter(todo => filter === 'sve' || todo.uradjen === filter)
+    .filter(todo => filter === 'sve'
+      || (filter === 'uradjeno' && todo.uradjen)
+      || (filter === 'aktivno' && !todo.uradjen)
+    )
     .map(todo => {
       const li = document.createElement('li')
       li.innerText = todo.tekst
@@ -70,7 +73,7 @@ const render = () => {
 
 store.subscribe(render)
 
-/* OTPRAVNICI */
+/* OTPRAVNICI AKCIJA */
 
 $('#dodaj').addEventListener('click', () => {
   if (!$('#todo').value) return
@@ -80,6 +83,6 @@ $('#dodaj').addEventListener('click', () => {
 
 $('#sve').addEventListener('click', () => dispatch(podesiFilter('sve')))
 
-$('#uradjeno').addEventListener('click', () => dispatch(podesiFilter(true)))
+$('#uradjeno').addEventListener('click', () => dispatch(podesiFilter('uradjeno')))
 
-$('#aktivno').addEventListener('click', () => dispatch(podesiFilter(false)))
+$('#aktivno').addEventListener('click', () => dispatch(podesiFilter('aktivno')))
