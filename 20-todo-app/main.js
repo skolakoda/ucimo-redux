@@ -1,35 +1,37 @@
+/* global Redux */
 const {createStore} = Redux
 const $ = s => document.querySelector(s)
-const lista = $('#lista')
-let i = 0
-
-/* REDUKTOR */
 
 const pocetnoStanje = {
   todos: [],
   filter: 'sve'
 }
+let i = 0
+
+/* REDUKTOR */
 
 const reduktor = (stanje = pocetnoStanje, akcija) => {
   switch (akcija.type) {
-    case 'DODAJ':
-      const todo = {
-        tekst: akcija.tekst,
-        uradjen: false,
-        id: i++
-      }
-      return Object.assign({}, stanje, { todos: [...stanje.todos, todo] })
-    case 'OBRNI_TODO':
-      const todos = stanje.todos.map(todo => todo.id === akcija.id
-        ? Object.assign({}, todo, {uradjen: !todo.uradjen})
-        : Object.assign({}, todo)
-      )
-      return Object.assign({}, stanje, {todos})
-    case 'POSTAVI_FILTER':
-      return Object.assign({}, stanje, { filter: akcija.filter })
-    default: return stanje
+  case 'DODAJ':
+    const todo = {
+      tekst: akcija.tekst,
+      uradjen: false,
+      id: i++
+    }
+    return {...stanje, todos: [...stanje.todos, todo]}
+  case 'OBRNI_TODO':
+    const todos = stanje.todos.map(todo => todo.id === akcija.id
+      ? {...todo, uradjen: !todo.uradjen}
+      : {...todo}
+    )
+    return {...stanje, todos}
+  case 'PODESI_FILTER':
+    return {...stanje, filter: akcija.filter}
+  default: return stanje
   }
 }
+
+/* SKLADISTE */
 
 const store = createStore(reduktor)
 const dispatch = store.dispatch
@@ -37,7 +39,7 @@ const dispatch = store.dispatch
 /* RENDER */
 
 const render = () => {
-  lista.innerHTML = ''
+  $('#lista').innerHTML = ''
   const filter = store.getState().filter
   store.getState().todos
     .filter(todo => filter === 'sve' || todo.uradjen === filter)
@@ -49,7 +51,7 @@ const render = () => {
         type: 'OBRNI_TODO',
         id: todo.id
       })
-      lista.appendChild(li)
+      $('#lista').appendChild(li)
     })
 }
 
@@ -58,21 +60,17 @@ store.subscribe(render)
 /* AKCIJE */
 
 const kreirajFilter = filter => ({
-  type: 'POSTAVI_FILTER',
+  type: 'PODESI_FILTER',
   filter
 })
 
-$('#dugme').addEventListener('click', () =>
-  dispatch({
-    type: 'DODAJ',
-    tekst: $('#todo').value
-  }))
+$('#dodaj').addEventListener('click', () => dispatch({
+  type: 'DODAJ',
+  tekst: $('#todo').value
+}))
 
-$('#sve').addEventListener('click', () =>
-  dispatch(kreirajFilter('sve')))
+$('#sve').addEventListener('click', () => dispatch(kreirajFilter('sve')))
 
-$('#uradjene').addEventListener('click', () =>
-  dispatch(kreirajFilter(true)))
+$('#uradjeno').addEventListener('click', () => dispatch(kreirajFilter(true)))
 
-$('#aktivne').addEventListener('click', () =>
-  dispatch(kreirajFilter(false)))
+$('#aktivno').addEventListener('click', () => dispatch(kreirajFilter(false)))
