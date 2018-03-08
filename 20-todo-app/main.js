@@ -8,11 +8,28 @@ const pocetnoStanje = {
 }
 let i = 0
 
+// TVORCI AKCIJA
+
+const podesiFilter = filter => ({
+  type: 'PODESI_FILTER',
+  filter
+})
+
+const obrniTodo = id => ({
+  type: 'OBRNI_TODO',
+  id
+})
+
+const dodajTodo = tekst => ({
+  type: 'DODAJ_TODO',
+  tekst
+})
+
 /* REDUKTOR */
 
 const reduktor = (stanje = pocetnoStanje, akcija) => {
   switch (akcija.type) {
-  case 'DODAJ':
+  case 'DODAJ_TODO':
     const todo = {
       tekst: akcija.tekst,
       uradjen: false,
@@ -20,9 +37,8 @@ const reduktor = (stanje = pocetnoStanje, akcija) => {
     }
     return {...stanje, todos: [...stanje.todos, todo]}
   case 'OBRNI_TODO':
-    const todos = stanje.todos.map(todo => todo.id === akcija.id
-      ? {...todo, uradjen: !todo.uradjen}
-      : {...todo}
+    const todos = stanje.todos.map(todo =>
+      todo.id === akcija.id ? {...todo, uradjen: !todo.uradjen} : {...todo}
     )
     return {...stanje, todos}
   case 'PODESI_FILTER':
@@ -47,30 +63,23 @@ const render = () => {
       const li = document.createElement('li')
       li.innerText = todo.tekst
       li.style.textDecoration = todo.uradjen ? 'line-through' : ''
-      li.onclick = () => dispatch({
-        type: 'OBRNI_TODO',
-        id: todo.id
-      })
+      li.onclick = () => dispatch(obrniTodo(todo.id))
       $('#lista').appendChild(li)
     })
 }
 
 store.subscribe(render)
 
-/* AKCIJE */
+/* OTPRAVNICI */
 
-const kreirajFilter = filter => ({
-  type: 'PODESI_FILTER',
-  filter
+$('#dodaj').addEventListener('click', () => {
+  if (!$('#todo').value) return
+  dispatch(dodajTodo($('#todo').value))
+  $('#todo').value = ''
 })
 
-$('#dodaj').addEventListener('click', () => dispatch({
-  type: 'DODAJ',
-  tekst: $('#todo').value
-}))
+$('#sve').addEventListener('click', () => dispatch(podesiFilter('sve')))
 
-$('#sve').addEventListener('click', () => dispatch(kreirajFilter('sve')))
+$('#uradjeno').addEventListener('click', () => dispatch(podesiFilter(true)))
 
-$('#uradjeno').addEventListener('click', () => dispatch(kreirajFilter(true)))
-
-$('#aktivno').addEventListener('click', () => dispatch(kreirajFilter(false)))
+$('#aktivno').addEventListener('click', () => dispatch(podesiFilter(false)))
