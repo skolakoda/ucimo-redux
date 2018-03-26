@@ -1,5 +1,6 @@
+/* global Redux */
 const {createStore} = Redux
-const [prikaz, povecaj, smanji] = document.querySelectorAll('#prikaz, #povecaj, #smanji')
+const [prikaz, smanji, povecaj] = document.querySelectorAll('#prikaz, #smanji, #povecaj')
 
 // funkcije
 const render = (prikaz, stanje) => prikaz.innerHTML = stanje
