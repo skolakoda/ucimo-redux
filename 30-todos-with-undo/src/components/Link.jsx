@@ -2,17 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Link = ({ active, children, onClick }) => {
-  if (active) {
-    return <span>{children}</span>
+  if (active) return <span>{children}</span>
+
+  const handleClick = e => {
+    e.preventDefault()
+    onClick()
   }
 
   return (
-    <a href="#" onClick={e => { // eslint-disable-line jsx-a11y/href-no-hash
-      e.preventDefault()
-      onClick()
-    }}>
-      {children}
-    </a>
+    <a href="" onClick={handleClick}>{children}</a>
   )
 }
 
