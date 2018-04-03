@@ -6,18 +6,17 @@ let i = 0
 const reduktorNiza = (stanje = [], akcija) => {
   switch (akcija.type) {
   case 'DODAJ':
-    const todo = {
+    const el = {
       tekst: akcija.tekst,
       uradjen: false,
       id: i++
     }
-    return [...stanje, todo]
+    return [...stanje, el]
   case 'OBRNI_TODO':
-    const todos = stanje.map(todo => todo.id === akcija.id
-      ? {...todo, uradjen: !todo.uradjen}
-      : {...todo}
+    return stanje.map(el => el.id === akcija.id
+      ? {...el, uradjen: !el.uradjen}
+      : {...el}
     )
-    return todos
   default: return stanje
   }
 }
