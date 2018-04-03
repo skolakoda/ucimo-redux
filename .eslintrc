@@ -50,7 +50,8 @@
       "sourceType": "module",
       "ecmaFeatures": {
           "impliedStrict": true,
-          "experimentalObjectRestSpread": true
+          "experimentalObjectRestSpread": true,
+          "jsx": true
       }
   }
 }

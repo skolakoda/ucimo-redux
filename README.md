@@ -6,6 +6,6 @@ Po tutorijalu [Getting Started with Redux](https://egghead.io/courses/getting-st
 
 ## Instalacija i pokretanje
 
-U prvih par lekcija koristimo samo dve biblioteke: [Redux](https://redux.js.org/) i [Expect.js](https://github.com/mjackson/expect) (za testove), koje su prekopirane u folder `libs`. Dovoljno je otvoriti `index.html` u pregledaču.
+U prvih par lekcija dovoljno je samo otvoriti `index.html` u pregledaču. 
 
 Kasnije lekcije koriste 'package.json', pa je potrebno pokretati `npm install` i `npm start` za svaku lekciju.

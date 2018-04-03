@@ -4,21 +4,21 @@ const $ = s => document.querySelector(s)
 const store = createStore(reduktor)
 const dispatch = store.dispatch
 
-/* AKCIJE */
+/* TVORCI AKCIJA */
 
 const podesiFilter = filter => ({
   type: 'PODESI_FILTER',
   filter
 })
 
-const dodaj = () => ({
+const dodaj = tekst => ({
   type: 'DODAJ',
-  tekst: $('#todo').value
+  tekst
 })
 
-const obrniTodo = todo => ({
+const obrniTodo = id => ({
   type: 'OBRNI_TODO',
-  id: todo.id
+  id
 })
 
 /* FUNKCIJE */
@@ -27,7 +27,7 @@ const dodajElement = (todo) => {
   const li = document.createElement('li')
   li.innerText = todo.tekst
   li.style.textDecoration = todo.uradjen ? 'line-through' : ''
-  li.onclick = () => dispatch(obrniTodo(todo))
+  li.onclick = () => dispatch(obrniTodo(todo.id))
   $('#lista').appendChild(li)
 }
 
@@ -40,9 +40,9 @@ const render = () => {
 
 store.subscribe(render)
 
-/* EVENTS */
+/* OTPRAVNICI AKCIJA */
 
-$('#dodaj').addEventListener('click', () => dispatch(dodaj()))
+$('#dodaj').addEventListener('click', () => dispatch(dodaj($('#todo').value)))
 
 $('#sve').addEventListener('click', () => dispatch(podesiFilter('sve')))
 
