@@ -3,28 +3,31 @@ const {combineReducers} = Redux
 
 let i = 0
 
-const reduktorNiza = (stanje = [], akcija) => {
+const todos = (stanje = [], akcija) => {
   switch (akcija.type) {
   case 'DODAJ':
-    const el = {
+    const todo = {
       tekst: akcija.tekst,
       uradjen: false,
       id: i++
     }
-    return [...stanje, el]
+    return [...stanje, todo]
   case 'OBRNI_TODO':
-    return stanje.map(el => el.id === akcija.id
-      ? {...el, uradjen: !el.uradjen}
-      : {...el}
+    return stanje.map(todo => todo.id === akcija.id
+      ? {...todo, uradjen: !todo.uradjen}
+      : {...todo}
     )
   default: return stanje
   }
 }
 
-const reduktorFiltera = (stanje = 'sve', akcija) => {
+const filter = (stanje = 'sve', akcija) => {
   if (akcija.type === 'PODESI_FILTER')
     return akcija.filter
   return stanje
 }
 
-const reduktor  = combineReducers({todos: reduktorNiza, filter: reduktorFiltera}) // eslint-disable-line no-unused-vars
+const reduktor  = combineReducers({ // eslint-disable-line no-unused-vars
+  todos,
+  filter
+})
