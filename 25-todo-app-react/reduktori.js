@@ -1,6 +1,5 @@
+/* global Redux */
 const {combineReducers} = Redux
-
-/* REDUKTORI */
 
 const addTodo = action => {
   return {
@@ -20,30 +19,30 @@ const toggleTodo = (todo, action) => {
 
 const todos = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_TODO':
-      return [
-        ...state,
-        addTodo(action)
-      ]
-    case 'TOGGLE_TODO':
-      return state.map(t => toggleTodo(t, action))
-    default:
-      return state
+  case 'ADD_TODO':
+    return [
+      ...state,
+      addTodo(action)
+    ]
+  case 'TOGGLE_TODO':
+    return state.map(t => toggleTodo(t, action))
+  default:
+    return state
   }
 }
 
 const visibilitiFilter = (state = 'SHOW_ALL', action) => {
   switch (action.type) {
-    case 'SET_VISIBILITY_FILTER':
-      return action.filter
-    default:
-      return state
+  case 'SET_VISIBILITY_FILTER':
+    return action.filter
+  default:
+    return state
   }
 }
 
 /* KOMPOZITNI REDUKTOR */
 
-const todoApp = combineReducers({
+const appState = combineReducers({
   todos,
   visibilitiFilter
 })

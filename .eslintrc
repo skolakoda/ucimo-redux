@@ -10,7 +10,7 @@
   },
   "rules": {
       "no-undef": "error",
-      "no-unused-vars": "error",
+      "no-unused-vars": "warn",
       "no-redeclare": "error",
       "no-use-before-define": "error",
       "no-dupe-args": "error",
