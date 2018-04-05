@@ -1,33 +1,13 @@
-/* global appState, ReactDOM, Redux */
-
-const {createStore} = Redux
-const store = createStore(appState)
-
-let nextTodoId = 0
-
-/* TVORCI AKCIJA */
-
-const setFilter = filter => store.dispatch({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
-})
-
-const dispatchAddTodo = text => store.dispatch({
-  type: 'ADD_TODO',
-  id: nextTodoId++,
-  text
-})
-
-const dispatchToggleTodo = id => store.dispatch({
-  type: 'TOGGLE_TODO',
-  id
-})
+/* global store, ReactDOM, dispatchAddTodo, dispatchToggleTodo */
 
 const filterTodos = (todos, filter) => {
   switch (filter) {
-  case 'SHOW_ALL': return todos
-  case 'SHOW_COMPLETED': return todos.filter(t => t.completed)
-  case 'SHOW_ACTIVE': return todos.filter(t => !t.completed)
+  case 'SHOW_ALL':
+    return todos
+  case 'SHOW_COMPLETED':
+    return todos.filter(t => t.completed)
+  case 'SHOW_ACTIVE':
+    return todos.filter(t => !t.completed)
   default: return todos
   }
 }
@@ -46,7 +26,8 @@ const App = ({todos, visibilitiFilter}) => (
 /* INIT */
 
 const render = () => ReactDOM.render(
-  <App {...store.getState()} />, document.getElementById('root')
+  <App {...store.getState()} />,
+  document.getElementById('root')
 )
 
 store.subscribe(render)

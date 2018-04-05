@@ -1,5 +1,5 @@
 /* global Redux */
-const {combineReducers} = Redux
+const {createStore, combineReducers} = Redux
 
 const addTodo = action => {
   return {
@@ -46,3 +46,5 @@ const appState = combineReducers({
   todos,
   visibilitiFilter
 })
+
+const store = createStore(appState)
