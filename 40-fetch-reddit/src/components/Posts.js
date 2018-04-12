@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 
 const Posts = ({posts}) => (
   <ul>
-    {posts.map((post, i) =>
-      <li key={i}>{post.title}</li>
-    )}
+    {posts
+      .sort((a, b) => b.score - a.score)
+      .map((post, i) =>
+        <li key={i}><a href={post.url}>{post.title}</a> <small>&#9734;{post.score}</small></li>
+      )}
   </ul>
 )
 

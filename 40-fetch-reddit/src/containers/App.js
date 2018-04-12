@@ -1,18 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { selectSubreddit, fetchPostsIfNeeded, invalidateSubreddit } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 
 class App extends Component {
-  static propTypes = {
-    selectedSubreddit: PropTypes.string.isRequired,
-    posts: PropTypes.array.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    lastUpdated: PropTypes.number,
-    dispatch: PropTypes.func.isRequired
-  }
 
   componentDidMount() {
     const { dispatch, selectedSubreddit } = this.props
@@ -46,7 +38,7 @@ class App extends Component {
         <Picker
           value={selectedSubreddit}
           onChange={this.handleChange}
-          options={[ 'reactjs', 'frontend' ]}
+          options={[ 'frontend', 'reactjs' ]}
         />
         <p>
           <span>Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
@@ -69,8 +61,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { selectedSubreddit, postsBySubreddit } = state
+const mapStateToProps = ({ selectedSubreddit, postsBySubreddit }) => {
   const {
     isFetching,
     lastUpdated,

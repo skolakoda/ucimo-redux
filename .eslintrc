@@ -10,7 +10,7 @@
   },
   "rules": {
       "no-undef": "error",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "error",
       "no-redeclare": "error",
       "no-use-before-define": "error",
       "no-dupe-args": "error",
@@ -21,7 +21,7 @@
       "no-param-reassign": "error",
       "vars-on-top": "error",
       "no-shadow-restricted-names": "error",
-      "indent": ["warn", 2],
+      "indent": ["warn", 2, { "SwitchCase": 1 }],
       "operator-assignment": ["error", "always"],
       "space-before-blocks": "warn",
       "space-before-function-paren": ["warn", "never"],
