@@ -6,19 +6,19 @@ const [prikaz, smanji, povecaj] = document.querySelectorAll('#prikaz, #smanji, #
 const render = (prikaz, stanje) => prikaz.innerHTML = stanje
 
 // reduktor
-const reduktor = (stanje = 0, akcija) => {
-  if (akcija.type == 'POVECAJ') return stanje + 1
-  if (akcija.type == 'SMANJI') return stanje - 1
+const reducer = (stanje = 0, action) => {
+  if (action.type == 'POVECAJ') return stanje + 1
+  if (action.type == 'SMANJI') return stanje - 1
   return stanje
 }
 
 // skladiste
-const skladiste = createStore(reduktor)
-skladiste.subscribe(() => render(prikaz, skladiste.getState()))
+const store = createStore(reducer)
+store.subscribe(() => render(prikaz, store.getState()))
 
-// akcije
-povecaj.addEventListener('click', () => skladiste.dispatch({type: 'POVECAJ'}))
-smanji.addEventListener('click', () => skladiste.dispatch({type: 'SMANJI'}))
+// otpremanje akcija
+povecaj.addEventListener('click', () => store.dispatch({type: 'POVECAJ'}))
+smanji.addEventListener('click', () => store.dispatch({type: 'SMANJI'}))
 
 // init
-render(prikaz, skladiste.getState())
+render(prikaz, store.getState())

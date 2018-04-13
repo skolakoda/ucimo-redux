@@ -10,7 +10,6 @@ const render = (prikaz, stanje) => prikaz.innerText = stanje
 /*
 REDUKTOR
   prima stanje i akciju, vraća novo stanje
-  stanje je samo prost broj
 */
 
 const reduktor = (state = 0, action) => {
