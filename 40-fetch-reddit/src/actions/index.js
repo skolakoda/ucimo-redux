@@ -25,10 +25,13 @@ export const receivePosts = (subreddit, json) => ({
   receivedAt: Date.now()
 })
 
-const fetchPosts = subreddit => dispatch => {
+/* THUNK ACTION CREATOR */
+
+const fetchPosts = subreddit => dispatch => { // thunk passes dispatch method as argument
   dispatch(requestPosts(subreddit))
-  return fetch(`https://www.reddit.com/r/${subreddit}.json`)
-    .then(response => response.json())
+  return fetch(`https://www.reddit.com/r/${subreddit}.json`) // return a promise
+    .then(response => response.json(), error => console.log('An error occurred.', error))
+    // do not use catch, because of bug https://github.com/facebook/react/issues/6895
     .then(json => dispatch(receivePosts(subreddit, json)))
 }
 
